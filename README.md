@@ -2,38 +2,36 @@
 
 ## usersテーブル
 
-| Column          | Type   | Options                  |
-| --------------- | ------ | ------------------------ |
-| nickname        | string | null: false              |
-| email           | string | null: false, unique: true|
-| password        | string | null: false              |
-| family_name     | string | null: false              |
-| first_name      | string | null: false              |
-| family_name     | string | null: false              |
-| first_name_kana | string | null: false              |
-| birthday        | date   | null: false              |
+| Column             | Type   | Options                   |
+| ------------------ | ------ | ------------------------- |
+| nickname           | string | null: false               |
+| email              | string | null: false, unique: true |
+| encrypted_password | string | null: false               |
+| family_name        | string | null: false               |
+| first_name         | string | null: false               |
+| family_name        | string | null: false               |
+| first_name_kana    | string | null: false               |
+| birthday           | date   | null: false               |
 
 ### association
 - has_many :items
-- has_many :buyers
 - has_many :orders
 
 ## buyersテーブル
 
-| Column        | Type       | Options           |
-| ------------- | ---------- | ----------------- |
-| post_code     | string     | null: false       |
-| prefecture    | string     | null: false       |
-| city          | string     | null: false       |
-| address       | string     | null: false       |
-| building_name | string     |                   |
-| phone_number  | string     | null: false       |
-| item          | references | foreign_key: true |
+| Column           | Type       | Options           |
+| ---------------- | ---------- | ----------------- |
+| post_code        | string     | null: false       |
+| prefecture_id    | string     | null: false       |
+| city             | string     | null: false       |
+| address          | string     | null: false       |
+| building_name    | string     |                   |
+| phone_number     | string     | null: false       |
+| order            | references | foreign_key: true |
 
 ### association
 - has_many :orders
-- belongs_to :user
-
+- belongs_to :prefecture_id
 
 ## itemsテーブル
 
@@ -50,6 +48,7 @@
 | user           | references | foreign_key: true |
 
 ### association
+- has_many :orders
 - belongs_to :user
 - belongs_to :status_id
 - belongs_to :judgment_id
@@ -65,5 +64,6 @@
 | item    | references | foreign_key: true |
 
 ### association
+- belongs_to :items
 - belongs_to :users
 - belongs_to :buyers
