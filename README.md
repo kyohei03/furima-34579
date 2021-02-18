@@ -1,24 +1,69 @@
-# README
+# テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## usersテーブル
 
-Things you may want to cover:
+| Column             | Type   | Options                   |
+| ------------------ | ------ | ------------------------- |
+| nickname           | string | null: false               |
+| email              | string | null: false, unique: true |
+| encrypted_password | string | null: false               |
+| family_name        | string | null: false               |
+| first_name         | string | null: false               |
+| family_name_kana   | string | null: false               |
+| first_name_kana    | string | null: false               |
+| birthday           | date   | null: false               |
 
-* Ruby version
+### association
+- has_many :items
+- has_many :orders
 
-* System dependencies
+## buyersテーブル
 
-* Configuration
+| Column           | Type       | Options           |
+| ---------------- | ---------- | ----------------- |
+| post_code        | string     | null: false       |
+| prefecture_id    | integer    | null: false       |
+| city             | string     | null: false       |
+| address          | string     | null: false       |
+| building_name    | string     |                   |
+| phone_number     | string     | null: false       |
+| order            | references | foreign_key: true |
 
-* Database creation
+### association
+- belongs_to :order
+- belongs_to :prefecture
 
-* Database initialization
+## itemsテーブル
 
-* How to run the test suite
+| Column         | Type       | Options           |
+| -------------- | ---------- | ----------------- |
+| name           | string     | null: false       |
+| price          | integer    | null: false       |
+| description    | string     | null: false       |
+| status_id      | integer    | null: false       |
+| judgment_id    | integer    | null: false       |
+| cost_id        | integer    | null: false       |
+| days_id        | integer    | null: false       |
+| prefecture_id  | integer    | null: false       |
+| user           | references | foreign_key: true |
 
-* Services (job queues, cache servers, search engines, etc.)
+### association
+- has_one :order
+- belongs_to :user
+- belongs_to :status
+- belongs_to :judgment
+- belongs_to :cost
+- belongs_to :days
+- belongs_to :prefecture
 
-* Deployment instructions
+## ordersテーブル
 
-* ...
+| Column  | Type       | Options           |
+| ------- | ---------- | ----------------- |
+| user    | references | foreign_key: true |
+| item    | references | foreign_key: true |
+
+### association
+- belongs_to :item
+- belongs_to :user
+- has_one :buyer
