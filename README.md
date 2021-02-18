@@ -30,7 +30,7 @@
 | order            | references | foreign_key: true |
 
 ### association
-- belongs_to :orders
+- belongs_to :order
 - belongs_to :prefecture
 
 ## itemsテーブル
