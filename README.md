@@ -22,7 +22,7 @@
 | Column           | Type       | Options           |
 | ---------------- | ---------- | ----------------- |
 | post_code        | string     | null: false       |
-| prefecture_id    | string     | null: false       |
+| prefecture_id    | integer    | null: false       |
 | city             | string     | null: false       |
 | address          | string     | null: false       |
 | building_name    | string     |                   |
@@ -30,8 +30,8 @@
 | order            | references | foreign_key: true |
 
 ### association
-- has_many :orders
-- belongs_to :prefecture_id
+- belongs_to :orders
+- belongs_to :prefecture
 
 ## itemsテーブル
 
@@ -48,13 +48,13 @@
 | user           | references | foreign_key: true |
 
 ### association
-- has_many :orders
+- has_one :order
 - belongs_to :user
-- belongs_to :status_id
-- belongs_to :judgment_id
-- belongs_to :cost_id
-- belongs_to :days_id
-- belongs_to :prefecture_id
+- belongs_to :status
+- belongs_to :judgment
+- belongs_to :cost
+- belongs_to :days
+- belongs_to :prefecture
 
 ## ordersテーブル
 
@@ -64,6 +64,6 @@
 | item    | references | foreign_key: true |
 
 ### association
-- belongs_to :items
-- belongs_to :users
-- belongs_to :buyers
+- belongs_to :item
+- belongs_to :user
+- has_one :buyer
