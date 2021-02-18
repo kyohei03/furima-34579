@@ -1,24 +1,46 @@
-# README
+# テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+##usersテーブル
 
-Things you may want to cover:
+| Column          | Type   | Options     |
+| --------------- | ------ | ----------- |
+| nickname        | string | null: false |
+| email           | string | null: false |
+| password        | string | null: false |
+| family_name     | string | null: false |
+| first_name      | string | null: false |
+| family_name     | string | null: false |
+| first_name_kana | string | null: false |
+| birthday        | date   | null: false |
 
-* Ruby version
+##buyersテーブル
 
-* System dependencies
+| Column        | Type       | Options           |
+| ------------- | ---------- | ----------------- |
+| post_code     | integer    | null: false       |
+| prefecture    | string     | null: false       |
+| city          | string     | null: false       |
+| address       | string     | null: false       |
+| building_name | string     | null: false       |
+| phone_number  | string     | null: false       |
+| user_id       | references | foreign_key: true |
 
-* Configuration
+##itemsテーブル
 
-* Database creation
+| Column      | Type       | Options           |
+| ----------- | ---------- | ----------------- |
+| name        | string     | null: false       |
+| price       | integer    | null: false       |
+| description | string     | null: false       |
+| status      | string     | null: false       |
+| judgment    | string     | null: false       |
+| cost        | integer    | null: false       |
+| days        | date       | null: false       |
+| user_id     | references | foreign_key: true |
 
-* Database initialization
+##ordersテーブル
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+| Column  | Type       | Options           |
+| ------- | ---------- | ----------------- |
+| user_id | references | foreign_key: true |
+| item_id | references | foreign_key: true |
