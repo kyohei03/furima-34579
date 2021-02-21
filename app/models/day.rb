@@ -1,4 +1,4 @@
-class Day < ApplicationRecord
+class Day < ActiveHash::Base
   self.data = [
     { id: 1, name: '--' },
     { id: 2, name: '1~2日で発送' },
@@ -9,5 +9,4 @@ class Day < ApplicationRecord
    include ActiveHash::Associations
    has_many :articles
  
-  end
 end

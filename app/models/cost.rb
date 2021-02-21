@@ -1,4 +1,4 @@
-class Cost < ApplicationRecord
+class Cost < ActiveHash::Base
   self.data = [
     { id: 1, name: '--' },
     { id: 2, name: '着払い（購入者負担）' },
@@ -8,5 +8,4 @@ class Cost < ApplicationRecord
    include ActiveHash::Associations
    has_many :articles
  
-  end
 end

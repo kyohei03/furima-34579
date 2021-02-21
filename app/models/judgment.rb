@@ -1,4 +1,4 @@
-class Judgment < ApplicationRecord
+class Judgment < ActiveHash::Base
   self.data = [
     { id: 1, name: '--' },
     { id: 2, name: '新品、未使用' },
@@ -12,6 +12,5 @@ class Judgment < ApplicationRecord
    include ActiveHash::Associations
    has_many :articles
  
-  end
 end
 
