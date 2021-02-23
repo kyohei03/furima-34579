@@ -69,6 +69,21 @@ RSpec.describe Item, type: :model do
       @item.valid?
       expect(@item.errors.full_messages).to include("Price Out of setting range")
     end
+    it 'priceが半角英数混合だと出品できない' do
+      @item.price = "1000rr"
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Price Half-width number")
+    end
+    it 'priceが半角英語だけだと出品できない' do
+      @item.price = "arr"
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Price Half-width number")
+    end
+    it 'imageが空では出品できない' do
+      @item.image = nil
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Image can't be blank")
+    end
   end
  end
 end
