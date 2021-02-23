@@ -14,26 +14,61 @@ RSpec.describe Item, type: :model do
     end
   end
     context '商品出品できないとき' do
-    it 'nameが空では登録できない' do
+    it 'nameが空では出品できない' do
       @item.name = ''
       @item.valid?
       expect(@item.errors.full_messages).to include("Name can't be blank")
     end
-    it 'priceが空では登録できない' do
+    it 'priceが空では出品できない' do
       @item.price = ''
       @item.valid?
       expect(@item.errors.full_messages).to include("Price can't be blank")
     end
-    it 'descriptionが空では登録できない' do
+    it 'descriptionが空では出品できない' do
       @item.description = ''
       @item.valid?
       expect(@item.errors.full_messages).to include("Description can't be blank")
     end
-    it "stutas_idがない場合は登録できないこと" do
-      @item.status_id = 0
+    it "stutas_idがない場合は出品できないこと" do
+      @item.status_id = 1
       @item.valid?
-      expect(@item.errors.full_messages).to include("Category Select")
+      expect(@item.errors.full_messages).to include("Status must be other than 1")
     end
-   end
+    it "judgment_idがない場合は出品できないこと" do
+      @item.judgment_id = 1
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Judgment must be other than 1")
+    end
+    it "cost_idがない場合は出品できないこと" do
+      @item.cost_id = 1
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Cost must be other than 1")
+    end
+    it "prefecture_idがない場合は出品できないこと" do
+      @item.prefecture_id = 1
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Prefecture must be other than 1")
+    end
+    it "days_idがない場合は出品できないこと" do
+      @item.days_id = 1
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Days must be other than 1")
+    end
+    it 'priceが全角数字だと出品できない' do
+      @item.price = "２０００"
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Price Half-width number")
+    end
+    it 'priceが299円以下だと出品できない' do
+      @item.price = "299"
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Price Out of setting range")
+    end
+    it 'priceが1000000円以上だと出品できない' do
+      @item.price = "10000000"
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Price Out of setting range")
+    end
+  end
  end
 end
