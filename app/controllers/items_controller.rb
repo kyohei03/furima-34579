@@ -54,3 +54,4 @@ class ItemsController < ApplicationController
                                  :user_id, :image).merge(user_id: current_user.id)
   end
 end
+
