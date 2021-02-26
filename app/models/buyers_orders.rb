@@ -1,6 +1,6 @@
 class BuyersOrders
   include ActiveModel::Model
-  attr_accessor :user_id, :item_id :post_code, :prefecture_id, :city, :address, :building_name, :phone_number, :token
+  attr_accessor :user_id, :item_id, :post_code, :prefecture_id, :city, :address, :building_name, :phone_number, :token
 
   with_options presence: true do
     validates :item_id
