@@ -13,7 +13,7 @@ class BuyersOrders
     validates :phone_number, format: {with: /\A\d{10}\z|\A\d{11}\z/ , message: "Phone_number Input only number"}
     # validates :token
   end
-  validates :prefecture_id, numericality: {other_than: 0, message: "can't be blank"}
+  validates :prefecture_id, numericality: {other_than: 1, message: "can't be blank"}
 
   def save
     order = Order.create(user_id: user_id, item_id: item_id)
