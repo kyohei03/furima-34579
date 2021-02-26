@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create]
   before_action :order_find, only: [:index, :create]
+  before_action :sold_out_item, only: [:index]
   
   def index
     @buyers_orders = BuyersOrders.new
@@ -20,6 +21,10 @@ class OrdersController < ApplicationController
 
   def order_find
     @Buyers_orders = Item.find(params[:item_id])
+  end
+
+  def sold_out_item
+    redirect_to root_path if @item.present?
   end
 
   def buyers_orders_params
