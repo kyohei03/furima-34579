@@ -1,9 +1,11 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create]
+  before_action :authenticate_user!, only: [:index, :create]
   before_action :order_find, only: [:index, :create]
   before_action :sold_out_item, only: [:index]
+  # before_action :check_user, only: [:index]
   
   def index
+    redirect_to root_path if current_user == @Buyers_orders.user || @Buyers_orders.order.present?
     @buyers_orders = BuyersOrders.new
   end
   
