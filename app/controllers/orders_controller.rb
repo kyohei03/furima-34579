@@ -9,7 +9,14 @@ class OrdersController < ApplicationController
   
   def create
     @buyers_orders = BuyersOrders.new(buyers_orders_params)
+    # binding.pry
     if @buyers_orders.valid?
+      Payjp.api_key = "sk_test_ed465047fd64a5d403711b0f"
+      Payjp::Charge.create(
+        amount: @Buyers_orders.price,
+        card: buyers_orders_params[:token],
+        currency: 'jpy'
+      )
       @buyers_orders.save
       redirect_to root_path
     else
@@ -28,6 +35,6 @@ class OrdersController < ApplicationController
   end
 
   def buyers_orders_params
-    params.require(:buyers_orders).permit(:address, :city, :post_code, :phone_number, :prefecture_id).merge(user_id: current_user.id, item_id: params[:item_id])
+    params.require(:buyers_orders).permit(:address, :city, :post_code, :phone_number, :prefecture_id).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
   end
 end

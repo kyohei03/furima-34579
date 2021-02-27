@@ -1,6 +1,6 @@
 class BuyersOrders
   include ActiveModel::Model
-  attr_accessor :user_id, :item_id, :post_code, :prefecture_id, :city, :address, :building_name, :phone_number
+  attr_accessor :user_id, :item_id, :post_code, :prefecture_id, :city, :address, :building_name, :phone_number, :token
   
   # , :token
 
@@ -11,7 +11,7 @@ class BuyersOrders
     validates :city
     validates :post_code, format: {with: /\A[0-9]{3}-[0-9]{4}\z/, message: "Post_code Input correctly"}
     validates :phone_number, format: {with: /\A\d{10}\z|\A\d{11}\z/ , message: "Phone_number Input only number"}
-    # validates :token
+    validates :token
   end
   validates :prefecture_id, numericality: {other_than: 1, message: "can't be blank"}
 
