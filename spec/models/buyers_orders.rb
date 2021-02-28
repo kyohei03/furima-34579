@@ -11,7 +11,7 @@ RSpec.describe BuyersOrders, type: :model do
 
   describe '商品を購入する' do
     context '商品を購入できるとき' do
-    it 'tokenとpost_codeとprefecture_idとcityとaddressとphone_numberが正しれば登録できる' do
+    it 'tokenとpost_codeとprefecture_idとcityとaddressとphone_numberが正しいかつbuilding_nameが抜けていても登録できる' do
     expect(@buyers_orders).to be_valid
     end
   context '商品購入できないとき' do
@@ -67,6 +67,16 @@ RSpec.describe BuyersOrders, type: :model do
     end
     it 'phone_numberが8桁未満では購入できない' do
       @buyers_orders.phone_number = '09012345'
+      @buyers_orders.valid?
+      expect(@buyers_orders.errors.full_messages).to include("Phone number Input only number")
+    end
+    it 'phone_numberが電話番号が数字のみでないとでは購入できない' do
+      @buyers_orders.phone_number = 'abc12345678'
+      @buyers_orders.valid?
+      expect(@buyers_orders.errors.full_messages).to include("Phone number Input only number")
+    end
+    it 'phone_numberが全角数字では購入できない' do
+      @buyers_orders.phone_number = '０９０１２３４５６７８'
       @buyers_orders.valid?
       expect(@buyers_orders.errors.full_messages).to include("Phone number Input only number")
     end

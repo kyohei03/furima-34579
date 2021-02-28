@@ -47,7 +47,7 @@ class ItemsController < ApplicationController
   end
 
   def confirm_user
-    redirect_to root_path if current_user == @item.user || @item.order.present?
+    redirect_to root_path if @item.order.present?
   end
 
   def item_find
