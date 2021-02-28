@@ -2,18 +2,16 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!, only: [:index, :create]
   before_action :order_find, only: [:index, :create]
   before_action :sold_out_item, only: [:index]
-  # before_action :check_user, only: [:index]
+  before_action :check_user, only: [:index, :create]
   
   def index
-    redirect_to root_path if current_user == @Buyers_orders.user || @Buyers_orders.order.present?
     @buyers_orders = BuyersOrders.new
   end
   
   def create
     @buyers_orders = BuyersOrders.new(buyers_orders_params)
-    # binding.pry
     if @buyers_orders.valid?
-      Payjp.api_key = "sk_test_ed465047fd64a5d403711b0f"
+      Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
       Payjp::Charge.create(
         amount: @Buyers_orders.price,
         card: buyers_orders_params[:token],
@@ -27,6 +25,10 @@ class OrdersController < ApplicationController
   end
   
   private
+
+  def check_user
+    redirect_to root_path if current_user == @Buyers_orders.user || @Buyers_orders.order.present?
+  end
 
   def order_find
     @Buyers_orders = Item.find(params[:item_id])
