@@ -11,22 +11,22 @@ class OrdersController < ApplicationController
   
   def create
     @buyers_orders = BuyersOrders.new(buyers_orders_params)
+    if @buyers_orders.valid?
+    @buyers_orders.save
+    redirect_to root_path
+    else
+    render :index
   end
   
   private
 
   def payjp
-  if @buyers_orders.valid?
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
     Payjp::Charge.create(
       amount: @Buyers_orders.price,
       card: buyers_orders_params[:token],
       currency: 'jpy'
     )
-    @buyers_orders.save
-    redirect_to root_path
-    else
-    render :index
   end
 
 
