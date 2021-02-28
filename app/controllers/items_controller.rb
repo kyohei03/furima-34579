@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :destroy]
   before_action :item_find, only: [:edit, :update, :show, :destroy]
   before_action :check_user, only: [:edit, :update, :destroy]
+  before_action :confirm_user, only: [:edit, :update]
 
   def index
     @items = Item.all.order(created_at: :desc)
@@ -45,6 +46,10 @@ class ItemsController < ApplicationController
     redirect_to action: :index unless current_user == @item.user
   end
 
+  def confirm_user
+    redirect_to root_path if @item.order.present?
+  end
+
   def item_find
     @item = Item.find(params[:id])
   end
@@ -54,3 +59,4 @@ class ItemsController < ApplicationController
                                  :user_id, :image).merge(user_id: current_user.id)
   end
 end
+
