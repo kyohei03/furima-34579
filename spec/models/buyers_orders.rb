@@ -11,9 +11,14 @@ RSpec.describe BuyersOrders, type: :model do
 
   describe '商品を購入する' do
     context '商品を購入できるとき' do
-    it 'tokenとpost_codeとprefecture_idとcityとaddressとphone_numberが正しいかつbuilding_nameが抜けていても登録できる' do
-    expect(@buyers_orders).to be_valid
+      it 'tokenとpost_codeとprefecture_idとcityとaddressとphone_numberとbuiding_nameが正しければ購入できる' do
+      expect(@buyers_orders).to be_valid
     end
+    it 'building_nameが無くても購入できる' do
+      @buyers_orders.building_name = ''
+      expect(@buyers_orders).to be_valid
+    end
+  end
   context '商品購入できないとき' do
     it 'tokenが空では購入できない' do
       @buyers_orders.token = ''
@@ -80,7 +85,16 @@ RSpec.describe BuyersOrders, type: :model do
       @buyers_orders.valid?
       expect(@buyers_orders.errors.full_messages).to include("Phone number Input only number")
     end
+    it 'user_idが空では購入できない' do
+      @buyers_orders.user_id = ''
+      @buyers_orders.valid?
+      expect(@buyers_orders.errors.full_messages).to include("User can't be blank")
+    end
+    it 'item_idが空では購入できない' do
+      @buyers_orders.item_id = ''
+      @buyers_orders.valid?
+      expect(@buyers_orders.errors.full_messages).to include("Item can't be blank")
+    end
    end
   end
  end
-end
