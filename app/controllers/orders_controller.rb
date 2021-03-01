@@ -3,7 +3,6 @@ class OrdersController < ApplicationController
   before_action :order_find, only: [:index, :create]
   before_action :sold_out_item, only: [:index]
   before_action :check_user, only: [:index, :create]
-  before_action :payjp, only: [:create]
   
   def index
     @buyers_orders = BuyersOrders.new
@@ -12,6 +11,7 @@ class OrdersController < ApplicationController
   def create
     @buyers_orders = BuyersOrders.new(buyers_orders_params)
     if @buyers_orders.valid?
+      payjp
     @buyers_orders.save
     redirect_to root_path
     else
