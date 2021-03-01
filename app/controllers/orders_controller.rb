@@ -30,6 +30,7 @@ class OrdersController < ApplicationController
     )
   end
 
+  
 
   def check_user
     redirect_to root_path if current_user == @Buyers_orders.user || @Buyers_orders.order.present?
