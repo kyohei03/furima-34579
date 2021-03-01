@@ -16,3 +16,4 @@ class ApplicationController < ActionController::Base
                                              :birthday])
   end
 end
+
